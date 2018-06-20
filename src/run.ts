@@ -1,28 +1,33 @@
-import axios from 'axios'
+import * as Dockerode from 'dockerode'
+import { WekanClient } from './wekan'
+import { inspect } from 'util'
 
-axios.defaults.baseURL = "http://localhost:4445"
-const BOARD = `Status des Applications`
+const BOARD = `HR6thXSb6nnwSTppB`
+
 
 async function run() {
-  const res = await axios.post('/users/login', {
-    email: 'dsi@sales-way.com',
-    password: 'Salesway1'
-  })
 
-  // console.log(res.data)
-  // Le token d'accès à wekan pour
-  const token = res.data.token
-  const user = res.data.id
-  axios.defaults.headers = {
-    Authorization: `Bearer ${res.data.token}`,
-    // 'Content-Type': 'application/json'
+  // const client = await WekanClient.init(
+  //   BOARD,
+  //   'http://localhost:4445',
+  //   'dsi@sales-way.com',
+  //   'Salesway1'
+  // )
+
+  const dock = new Dockerode({socketPath: '/var/run/docker.sock'})
+
+  const cts = await dock.listContainers({all: true})
+  for (var _ of cts) {
+
+    const c = await dock.getContainer(_.Id)
+    const info = await c.inspect()
+    // info.Config.Env
+    console.log(inspect(info, {colors: true, depth: null}))
   }
-  // console.log(axios.defaults.headers)
+  // console.log(cts)
 
-
-  const boards = await axios.get(`/api/users/${user}/boards`)
-
-  console.log(boards.data)
+  // Get current user boards
+  // const board = (await client.getDockerBoard())
 }
 
-run().catch(e => console.error(e))
+run().catch(e => console.error(e.stack))

@@ -3,9 +3,11 @@
   "name": "wekan-docker-update",
   "version": "0.0.1",
   "devDependencies": {
+    "@types/dockerode": "^2.5.4",
     "@types/node": "^10.3.4"
   },
   "dependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "dockerode": "^2.5.5"
   }
 }
