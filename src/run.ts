@@ -61,7 +61,7 @@ async function run() {
     const running = p.containers.map(c => c.State.Running).filter(a => a).length > 0
     // console.log(title, urls, running)
     const containers = p.containers.map(c =>
-      ` * **${c.Name.slice(1)}** \`${(c.NetworkSettings.IPAddress + ' ' + Object.keys(c.NetworkSettings.Ports).join(', ')).trim() || '<éteint>'}\`\n*${c.Config.Image}*\n${(new Date(c.Created)).toLocaleString('fr-FR')}\n\n`
+      ` * **${c.Name.slice(1)}** \`${(c.NetworkSettings.IPAddress + ' ' + Object.keys(c.NetworkSettings.Ports||{}).join(', ')).trim() || '<éteint>'}\`\n*${c.Config.Image}*\n${(new Date(c.Created)).toLocaleString('fr-FR')}\n\n`
     ).join('\n')
 
     const description = `#### infos auto (${title})
