@@ -28,17 +28,6 @@ EOF
 
 read
 
-# On recompile le JS en l'uglifiant.
-cd client && PRODUCTION=Y webpack && sed -i "s/%dev%/${tag}/g" build/app.js && cd ..
-
-if [ "$?" -ne 0 ]; then
-  cat <<EOF
-	
-	build failed !
-EOF
-  exit 1
-fi
-
 docker build --no-cache --rm -t "$repo:$tag" .
 
 cat <<EOF
