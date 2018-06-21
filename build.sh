@@ -33,7 +33,7 @@ docker build --no-cache --rm -t "$repo:$tag" .
 cat <<EOF
 
   Type enter to automatically upload this image to
-    $color$repo$tag$reset
+    $color$repo:$tag$reset
   or CTRL-C to abort.
 
 EOF
