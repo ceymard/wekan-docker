@@ -204,12 +204,13 @@ export class WekanClient {
       })
       // console.log(res.data)
     } else {
-      await this.client.post(`/api/boards/${this.boardId}/lists/${this.listId}/cards`, {
+      const res = await this.client.post(`/api/boards/${this.boardId}/lists/${this.listId}/cards`, {
         title,
         swimlaneId: this.laneId,
         description: `${def}\n${infos}`,
         authorId: this.userId
       })
+      const id = res.data._id
     }
   }
 }
