@@ -65,12 +65,15 @@ async function run() {
 
     // console.log(title, urls, running)
     const containers = p.containers.map(c =>
-      ` * **${c.Name.slice(1)}** \`${(c.NetworkSettings.IPAddress + ' ' + Object.keys(c.NetworkSettings.Ports||{}).join(', ')).trim() || '<éteint>'}\`\n*${c.Config.Image}*\n${(new Date(c.Created)).toLocaleString('fr-FR')}\n\n`
-    ).join('\n')
+      `# ${c.Name.slice(1)}
+## \`${(c.NetworkSettings.IPAddress + ' ' + Object.keys(c.NetworkSettings.Ports||{}).join(', ')).trim() || '<éteint>'}\`
+${c.Config.Image}
+Créé le ${(new Date(c.Created)).toLocaleString('fr-FR')}
+`).join('\n')
 
     const description = `#### infos auto (${title})
 ${urls ? `
-**URL**: ${urls}
+# URL : ${urls}
 ` : ''}
 
 ${(containers)}

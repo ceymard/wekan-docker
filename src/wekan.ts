@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {AxiosInstance} from 'axios'
 import { hostname } from 'os'
+import { DESTRUCTION } from 'dns';
 
 const SWIMLANE = process.env.SWIMLANE || hostname()
 
@@ -143,6 +144,7 @@ export class WekanClient {
 
         if (match) {
           this.cards[match[1]] = card
+          // console.log(`found ${match[1]}`)
         }
         // l.cards.push(card)
       }
@@ -195,10 +197,12 @@ export class WekanClient {
         labels.push(this.backupedId)
 
       console.log(`updating ${title}`)
-      await this.client.put(`/api/boards/${this.boardId}/lists/${this.listId}/cards/${card._id}`, {
+      // console.log(desc)
+      await this.client.put(`/api/boards/${this.boardId}/lists/${card.listId}/cards/${card._id}`, {
         description: desc,
         labelIds: labels
       })
+      // console.log(res.data)
     } else {
       await this.client.post(`/api/boards/${this.boardId}/lists/${this.listId}/cards`, {
         title,
