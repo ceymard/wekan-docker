@@ -6,11 +6,20 @@ Updates cards in a wekan board that reflect the status of all docker-compose pro
 
 The cards are added into the first available column for now.
 
-# Wekan Requirements
+# Requirements
 
-In the board where the status cards will be created, you need at least an **Up** and a **Down** label.
+You need the following :
+
+* A running wekan
+* A user account with admin privileges (which will be used to update the cards)
+* A board in the wekan
+* A named swimlane to host the cards
+* An **Up** and a **Down** label in the board
 
 # Env variables
+
+Run the container with the following variables.
+Also, mount /var/run/docker.sock in the container (as read-only is ok)
 
 * **BOARD** : The id of the board (that is in the URL after `/b/`)
 * **EMAIL** : The email of the wekan user. It needs to be administrator to work.
@@ -18,4 +27,4 @@ In the board where the status cards will be created, you need at least an **Up**
 * **SWIMLANE** : The *name* (not id) of the swimlane where the cards will be added
 
 optional variables:
-* **WEKAN_URL** : An URL to reach a wekan server.
+* **WEKAN_URL** : An URL to reach a wekan server, defaults to *http://wekan*
