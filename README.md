@@ -17,7 +17,7 @@ You need the following :
 * A user account with admin privileges (which will be used to update the cards)
 * A board in the wekan
 * A named swimlane to host the cards
-* An **Up** and a **Down** label in the board
+* An **Up**, a **Down** and a **Backup** label in the board
 
 # Env variables
 

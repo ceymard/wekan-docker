@@ -58,7 +58,11 @@ async function run() {
       }
       return ''
     }).filter(a => a).map(a => `[${a.replace('.sales-way.com', '')}](https://${a})`).join(', ')
-    const running = p.containers.map(c => c.State.Running).filter(a => a).length > 0
+    const running = p.containers.map(c => c.State.Running).filter(a => a).length
+
+    // we want to look for the presence of backups
+    const has_auto_backup = p.containers.map(c => c.Config.Labels && c.Config.Labels['basement.auto-backup']).filter(a => a).length > 0
+
     // console.log(title, urls, running)
     const containers = p.containers.map(c =>
       ` * **${c.Name.slice(1)}** \`${(c.NetworkSettings.IPAddress + ' ' + Object.keys(c.NetworkSettings.Ports||{}).join(', ')).trim() || '<éteint>'}\`\n*${c.Config.Image}*\n${(new Date(c.Created)).toLocaleString('fr-FR')}\n\n`
@@ -71,7 +75,7 @@ ${urls ? `
 
 ${(containers)}
 `
-    await client.updateCard(title, description, running)
+    await client.updateCard(title, description, running > 0, running !== p.containers.length, has_auto_backup)
   }
 }
 

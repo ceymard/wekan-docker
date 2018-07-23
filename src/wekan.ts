@@ -170,7 +170,9 @@ export class WekanClient {
   async updateCard(
     title: string,
     infos: string,
-    running: boolean
+    running: boolean,
+    not_running: boolean,
+    has_backup: boolean
   ) {
 
     const def = `#### Informations Projet
@@ -184,8 +186,13 @@ export class WekanClient {
     if (card) {
       const desc = (card.description!||'').replace(/^<hr>[^]*/m, '') + '<hr>\n' + infos
 
-      const labels = (card.labelIds || []).filter(l => l !== this.downId && l !== this.upId)
-      labels.push(running ? this.upId : this.downId)
+      const labels = (card.labelIds || []).filter(l => l !== this.downId && l !== this.upId && l !== this.backupedId)
+      if (running)
+        labels.push(this.upId)
+      if (not_running)
+        labels.push(this.downId)
+      if (has_backup)
+        labels.push(this.backupedId)
 
       console.log(`updating ${title}`)
       await this.client.put(`/api/boards/${this.boardId}/lists/${this.listId}/cards/${card._id}`, {
