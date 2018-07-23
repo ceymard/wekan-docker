@@ -2,6 +2,9 @@
 
 Updates cards in a wekan board that reflect the status of all docker-compose projects currently existing on a docker host.
 
+Be careful when editing cards description to not remove the "auto" part.
+You can use the rest of the card pretty much however you want, as long as you don't change its swimlane (otherwise another one will be created)
+
 /!\ Swarm services is not handled right now.
 
 The cards are added into the first available column for now.
