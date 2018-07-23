@@ -184,8 +184,8 @@ export class WekanClient {
     if (card) {
       const desc = (card.description!||'').replace(/^<hr>[^]*/m, '') + '<hr>\n' + infos
 
-
-      const labels = [running ? this.upId : this.downId]
+      const labels = (card.labelIds || []).filter(l => l !== this.downId && l !== this.upId)
+      labels.push(running ? this.upId : this.downId)
 
       console.log(`updating ${title}`)
       await this.client.put(`/api/boards/${this.boardId}/lists/${this.listId}/cards/${card._id}`, {

@@ -6,6 +6,10 @@ Updates cards in a wekan board that reflect the status of all docker-compose pro
 
 The cards are added into the first available column for now.
 
+# Wekan Requirements
+
+In the board where the status cards will be created, you need at least an **Up** and a **Down** label.
+
 # Env variables
 
 * **BOARD** : The id of the board (that is in the URL after `/b/`)
